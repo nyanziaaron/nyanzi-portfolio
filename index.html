@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aaron Nyanzi - Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        pearl: '#F7F5F2',
+                        eerie: '#171411',
+                        tuscany: '#C0AB9A',
+                        umber: '#7B5C4B'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F5F2; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C0AB9A; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7B5C4B; 
+        }
+
+        /* Active navigation link styling */
+        .nav-link.active {
+            color: #C0AB9A; /* Tuscany */
+            font-weight: 600;
+        }
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: #C0AB9A;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-pearl text-eerie font-sans antialiased selection:bg-tuscany selection:text-eerie">
+
+    <!-- Mobile Header & Menu Toggle -->
+    <div class="md:hidden fixed top-0 left-0 right-0 h-16 bg-eerie text-pearl flex items-center justify-between px-6 z-50 shadow-md">
+        <div class="font-bold tracking-widest text-tuscany text-sm">AARON NYANZI KARANJA</div>
+        <button id="mobile-menu-btn" class="text-2xl focus:outline-none text-tuscany">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <!-- Fixed on desktop, slide-over on mobile -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-eerie text-pearl transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-2xl overflow-y-auto">
+        
+        <div class="flex flex-col items-center pt-16 md:pt-12 px-8">
+            <!-- Profile Image Placeholder -->
+            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-tuscany mb-6">
+                <img src="Aaron image.jpg" alt="Aaron Nyanzi Karanja" class="w-full h-full object-cover">
+            </div>
+            
+            <h1 class="text-2xl font-bold tracking-wider mb-2 text-center">AARON NYANZI<br>KARANJA</h1>
+            <p class="text-xs tracking-widest text-tuscany uppercase text-center mb-8">CS Student & Creator</p>
+
+            <!-- Navigation Links -->
+            <nav class="w-full flex flex-col space-y-4 text-sm tracking-widest uppercase">
+                <a href="#home" class="nav-link relative block py-2 transition-colors hover:text-tuscany">Home</a>
+                <a href="#about" class="nav-link relative block py-2 transition-colors hover:text-tuscany">About Me</a>
+                <a href="#experience" class="nav-link relative block py-2 transition-colors hover:text-tuscany">Work Experience</a>
+                <a href="#skills" class="nav-link relative block py-2 transition-colors hover:text-tuscany">Skills</a>
+                <a href="#education" class="nav-link relative block py-2 transition-colors hover:text-tuscany">Education</a>
+                <a href="#certifications" class="nav-link relative block py-2 transition-colors hover:text-tuscany">Certifications</a>
+                <a href="#contact" class="nav-link relative block py-2 transition-colors hover:text-tuscany">Contact</a>
+            </nav>
+        </div>
+
+        <!-- Social Links -->
+        <div class="px-8 pb-12 flex justify-center space-x-6">
+            <a href="https://www.linkedin.com/in/aaron-nyanzi-746933328" target="_blank" class="text-xl text-pearl hover:text-tuscany transition-colors">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/nyanziaaron" target="_blank" class="text-xl text-pearl hover:text-tuscany transition-colors">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.tiktok.com/@stickyfied" target="_blank" class="text-xl text-pearl hover:text-tuscany transition-colors">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Overlay for mobile when sidebar is open -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
+
+    <!-- Main Content Area -->
+    <main class="md:ml-72 pt-16 md:pt-0">
+        
+        <!-- ================= HOME SECTION ================= -->
+        <section id="home" class="min-h-screen px-6 py-20 md:px-16 lg:px-24 flex flex-col justify-center">
+            <div class="max-w-4xl">
+                <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 uppercase">
+                    Aaron Nyanzi <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-umber to-tuscany">Karanja</span>
+                </h2>
+                <h3 class="text-xl md:text-2xl font-semibold tracking-wide text-umber">
+                    Computer Science Student | IT, Networking & Digital Design
+                </h3>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT ME SECTION ================= -->
+        <section id="about" class="py-20 px-6 md:px-16 lg:px-24 border-t border-tuscany/30 flex flex-col justify-center min-h-screen">
+            <div class="max-w-4xl">
+                <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
+                    About Me
+                    <span class="absolute -bottom-3 left-0 w-1/2 h-1 bg-tuscany"></span>
+                </h2>
+                
+                <p class="text-lg leading-relaxed opacity-90">
+                    Computer Science student at Zetech University with foundational knowledge of IT, computer networking, and graphic design. Experienced in independently managing digital projects, creating visual content, and using digital tools to achieve practical results. Trained in entrepreneurship and small business management, with a strong interest in technology, problem-solving, and continuous learning. Focused on developing practical skills and gaining experience in preparation for future professional opportunities.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= WORK EXPERIENCE SECTION ================= -->
+        <section id="experience" class="py-20 px-6 md:px-16 lg:px-24 border-t border-tuscany/30">
+            <div class="max-w-4xl">
+                <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
+                    Work Experience
+                    <span class="absolute -bottom-3 left-0 w-1/2 h-1 bg-tuscany"></span>
+                </h2>
+                
+                <div class="mb-8 pl-6 border-l-2 border-tuscany relative">
+                    <div class="absolute w-3 h-3 bg-tuscany rounded-full -left-[7px] top-1"></div>
+                    <h3 class="font-bold text-xl uppercase tracking-wider mb-1">Digital Content Creator & Social Media Manager</h3>
+                    <p class="text-umber font-semibold text-sm mb-4">July 2025 - Present</p>
+                    <ul class="list-disc list-inside text-base opacity-90 space-y-2">
+                        <li>Grew a digital platform from zero to 50,000+ followers through consistent content creation and audience engagement.</li>
+                        <li>Created and managed digital content to improve brand visibility and online presence.</li>
+                        <li>Developed visual content and branding materials to maintain a consistent brand identity.</li>
+                        <li>Monitored audience engagement and used performance insights to guide content strategies.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SKILLS SECTION ================= -->
+        <section id="skills" class="py-20 px-6 md:px-16 lg:px-24 border-t border-tuscany/30">
+            <div class="max-w-4xl">
+                <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
+                    Skills
+                    <span class="absolute -bottom-3 left-0 w-1/2 h-1 bg-tuscany"></span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <h4 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Design & Video Production</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Canva</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">CapCut</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Web Development & Programming</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">HTML</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">CSS</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">JavaScript</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Python</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Networking & IT Support</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Cisco Packet Tracer</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Analytics & Audience Growth</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Google Analytics</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Linktree</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Beacons</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Social Media & Management</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">TikTok Analytics</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">YouTube Studio</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Strategy & Productivity</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Google Workspace</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-semibold rounded">Microsoft Office</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= EDUCATION SECTION ================= -->
+        <section id="education" class="py-20 px-6 md:px-16 lg:px-24 border-t border-tuscany/30">
+            <div class="max-w-4xl">
+                <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
+                    Education
+                    <span class="absolute -bottom-3 left-0 w-1/2 h-1 bg-tuscany"></span>
+                </h2>
+                
+                <div class="pl-6 border-l-2 border-tuscany relative">
+                    <div class="absolute w-3 h-3 bg-tuscany rounded-full -left-[7px] top-1"></div>
+                    <h3 class="font-bold text-xl uppercase tracking-wider mb-1">Bachelor of Science in Computer Science</h3>
+                    <p class="text-umber font-semibold text-base mb-2">Zetech University, Ruiru</p>
+                    <p class="text-sm opacity-80 italic">Expected Graduation: November 2027</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CERTIFICATIONS SECTION ================= -->
+        <section id="certifications" class="py-20 px-6 md:px-16 lg:px-24 border-t border-tuscany/30">
+            <div class="max-w-4xl">
+                <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
+                    Certifications
+                    <span class="absolute -bottom-3 left-0 w-1/2 h-1 bg-tuscany"></span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Cert 1 -->
+                    <div class="bg-white border border-gray-200 p-8 rounded-lg shadow hover:shadow-xl transition-shadow duration-300 flex items-start">
+                        <div class="text-4xl text-umber mr-6">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold mb-2 leading-tight">Mastercard Foundation Business Certification</h3>
+                        </div>
+                    </div>
+
+                    <!-- Cert 2 -->
+                    <div class="bg-white border border-gray-200 p-8 rounded-lg shadow hover:shadow-xl transition-shadow duration-300 flex items-start">
+                        <div class="text-4xl text-umber mr-6">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold mb-2 leading-tight">What Is Generative AI? Certificate</h3>
+                            <p class="text-sm text-tuscany font-semibold mb-2">LinkedIn (2025)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT SECTION ================= -->
+        <section id="contact" class="min-h-screen px-6 py-20 md:px-16 lg:px-24 border-t border-tuscany/30 flex flex-col justify-center">
+            <div class="max-w-5xl">
+                <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
+                    Contact
+                    <span class="absolute -bottom-3 left-0 w-1/2 h-1 bg-tuscany"></span>
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    
+                    <!-- Contact Info -->
+                    <div>
+                        <div class="space-y-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-eerie text-tuscany rounded-full flex justify-center items-center text-xl mr-4 shadow-md">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold uppercase tracking-wider text-umber">Email</h4>
+                                    <a href="mailto:Aaronkaranjanyanzi@gmail.com" class="text-lg hover:text-tuscany transition-colors font-medium">Aaronkaranjanyanzi@gmail.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-eerie text-tuscany rounded-full flex justify-center items-center text-xl mr-4 shadow-md">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold uppercase tracking-wider text-umber">Phone</h4>
+                                    <a href="tel:+254716277805" class="text-lg hover:text-tuscany transition-colors font-medium">+254 716277805</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-eerie text-tuscany rounded-full flex justify-center items-center text-xl mr-4 shadow-md">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold uppercase tracking-wider text-umber">Location</h4>
+                                    <p class="text-lg font-medium">Nairobi, Kenya</p>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-6 border-t border-tuscany/30 mt-6">
+                                <h4 class="text-sm font-bold uppercase tracking-wider text-umber mb-4">Connect Online</h4>
+                                <div class="flex space-x-4">
+                                    <a href="https://www.tiktok.com/@stickyfied" target="_blank" class="w-10 h-10 bg-eerie text-pearl hover:text-tuscany rounded-full flex justify-center items-center transition-colors shadow-md">
+                                        <i class="fab fa-tiktok"></i>
+                                    </a>
+                                    <a href="https://github.com/nyanziaaron" target="_blank" class="w-10 h-10 bg-eerie text-pearl hover:text-tuscany rounded-full flex justify-center items-center transition-colors shadow-md">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/aaron-nyanzi-746933328" target="_blank" class="w-10 h-10 bg-eerie text-pearl hover:text-tuscany rounded-full flex justify-center items-center transition-colors shadow-md">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
+                        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)">
+                            
+                            <!-- Your Web3Forms Access Key -->
+                            <input type="hidden" name="access_key" value="26c79d60-6cfa-4105-a792-51eed7039e64">
+                            
+                            <!-- Updated Subject Line -->
+                            <input type="hidden" name="subject" value="Service inquiry">
+                            
+                            <!-- Spam protection -->
+                            <input type="hidden" name="botcheck" style="display: none;">
+
+                            <div class="mb-6">
+                                <label for="name" class="block text-sm font-semibold mb-2 uppercase tracking-wider text-eerie">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-pearl border border-gray-300 rounded focus:outline-none focus:border-tuscany focus:ring-1 focus:ring-tuscany transition-colors" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="email" class="block text-sm font-semibold mb-2 uppercase tracking-wider text-eerie">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-pearl border border-gray-300 rounded focus:outline-none focus:border-tuscany focus:ring-1 focus:ring-tuscany transition-colors" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-sm font-semibold mb-2 uppercase tracking-wider text-eerie">Message</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 bg-pearl border border-gray-300 rounded focus:outline-none focus:border-tuscany focus:ring-1 focus:ring-tuscany transition-colors resize-none" placeholder="How can I help you?" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-tuscany hover:bg-umber text-eerie hover:text-pearl font-bold uppercase tracking-widest py-4 rounded transition-colors duration-300 shadow-md">
+                                Send Message
+                            </button>
+                            <p id="formStatus" class="mt-4 text-center text-sm font-semibold hidden"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer snippet for main content area -->
+            <div class="mt-20 pt-8 border-t border-gray-300 text-center text-sm opacity-60">
+                &copy; <span id="year"></span> Aaron Nyanzi Karanja. All rights reserved.
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript functionality -->
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function toggleMenu() {
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            if (isOpen) {
+                // Close menu
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            } else {
+                // Open menu
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling underneath
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close mobile menu when a nav link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) { // md breakpoint in tailwind
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Active Link Highlighting on Scroll
+        const sections = document.querySelectorAll('section');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                // Add an offset to trigger earlier when scrolling down
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Functional Form Submission using FormSubmit.co
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const btn = form.querySelector('button');
+            const status = document.getElementById('formStatus');
+            const originalText = btn.textContent;
+            
+            // UI update while sending
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70');
+
+            // Gather form data
+            const formData = new FormData(form);
+
+            // Send data using fetch API
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            })
+            .then(data => {
+                // Reset button
+                btn.textContent = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-70');
+                
+                // Show success message
+                form.reset();
+                status.textContent = 'Message sent successfully!';
+                status.classList.remove('hidden', 'text-red-500');
+                status.classList.add('text-green-600');
+                
+                // Hide message after 4 seconds
+                setTimeout(() => {
+                    status.classList.add('hidden');
+                }, 4000);
+            })
+            .catch(error => {
+                // Reset button
+                btn.textContent = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-70');
+                
+                // Show error message
+                status.textContent = 'Oops! There was a problem sending your message.';
+                status.classList.remove('hidden', 'text-green-600');
+                status.classList.add('text-red-500');
+            });
+        }
+    </script>
+    <!-- ================= GEMINI-POWERED PORTFOLIO CHATBOT ================= -->
+<div id="portfolioBot" class="fixed bottom-6 right-6 z-50 font-sans">
+    
+    <!-- Chat Toggle Button -->
+    <button id="botToggleBtn" onclick="toggleChat()" class="bg-tuscany hover:bg-umber text-pearl p-4 rounded-full shadow-2xl flex items-center justify-center transition-transform transform hover:scale-105 focus:outline-none">
+        <svg id="chatIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+        <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+
+    <!-- Chat Window Box -->
+    <div id="chatWindow" class="hidden absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col transition-all duration-300">
+        
+        <!-- Chat Header -->
+        <div class="bg-eerie text-pearl p-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <div>
+                    <h3 class="font-bold text-sm tracking-wide">Aaron's Assistant</h3>
+                    <p class="text-xs text-gray-400">Online | AI Powered</p>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-gray-400 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div id="chatMessages" class="p-4 h-80 overflow-y-auto space-y-3 bg-pearl text-sm flex flex-col">
+            <div class="flex items-start space-x-2">
+                <div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 max-w-[85%] text-eerie">
+                    Hey! 👋 How can I help you explore Aaron's portfolio today?
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Reply Chips -->
+        <div class="px-3 py-2 bg-white border-t border-gray-100 flex gap-2 overflow-x-auto text-xs">
+            <button onclick="sendQuickReply('Where did he go to school?')" class="bg-pearl hover:bg-gray-200 text-eerie px-3 py-1 rounded-full whitespace-nowrap transition-colors">🎓 School</button>
+            <button onclick="sendQuickReply('What are his skills?')" class="bg-pearl hover:bg-gray-200 text-eerie px-3 py-1 rounded-full whitespace-nowrap transition-colors">💻 Skills</button>
+            <button onclick="sendQuickReply('How can I contact Aaron?')" class="bg-pearl hover:bg-gray-200 text-eerie px-3 py-1 rounded-full whitespace-nowrap transition-colors">📧 Contact</button>
+        </div>
+
+        <!-- Chat Input Form -->
+        <div class="p-3 bg-white border-t border-gray-200 flex items-center">
+            <input type="text" id="chatInput" placeholder="Ask a question..." class="flex-1 px-3 py-2 bg-pearl border border-gray-300 rounded-l focus:outline-none focus:border-tuscany text-sm" onkeypress="handleKeypress(event)">
+            <button onclick="sendMessage()" class="bg-tuscany hover:bg-umber text-pearl px-4 py-2 rounded-r transition-colors flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Chatbot Logic Script -->
+<script>
+    function toggleChat() {
+        const chatWindow = document.getElementById('chatWindow');
+        const chatIcon = document.getElementById('chatIcon');
+        const closeIcon = document.getElementById('closeIcon');
+        
+        chatWindow.classList.toggle('hidden');
+        chatIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+        
+        if (!chatWindow.classList.contains('hidden')) {
+            document.getElementById('chatInput').focus();
+        }
+    }
+
+    function handleKeypress(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    function sendQuickReply(text) {
+        document.getElementById('chatInput').value = text;
+        sendMessage();
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const messagesContainer = document.getElementById('chatMessages');
+
+        // Append User Message
+        const userMsgDiv = document.createElement('div');
+        userMsgDiv.className = 'flex justify-end';
+        userMsgDiv.innerHTML = `<div class="bg-tuscany text-eerie font-medium p-3 rounded-lg shadow-sm max-w-[85%]" style="color: #2D2D2D;">${escapeHtml(text)}</div>`;
+        messagesContainer.appendChild(userMsgDiv);
+
+        input.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Check for contact intents locally for instant rich action card rendering
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes('contact') || lowerText.includes('email') || lowerText.includes('whatsapp') || lowerText.includes('phone') || lowerText.includes('reach') || lowerText.includes('hire') || lowerText.includes('touch')) {
+            const botMsgDiv = document.createElement('div');
+            botMsgDiv.className = 'flex items-start space-x-2 mt-2';
+            botMsgDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 max-w-[85%] text-eerie">You can reach Aaron directly here:<br><br>
+                <a href="mailto:Aaronkaranjanyanzi@gmail.com?subject=Service%20Inquiry&body=Hi%20Aaron,%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect." class="text-tuscany font-bold underline hover:text-umber block mb-2">📧 Send an Email</a>
+                <a href="https://wa.me/254716277805?text=Hi%20Aaron,%20I%20visited%20your%20portfolio%20and%20would%20love%20to%20connect." target="_blank" class="text-green-600 font-bold underline hover:text-green-700 block">💬 Message on WhatsApp</a></div>`;
+            messagesContainer.appendChild(botMsgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return;
+        }
+
+        // Append Loading Indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'flex items-start space-x-2 mt-2';
+        loadingDiv.id = 'loadingBubble';
+        loadingDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 text-gray-400 italic text-xs">Thinking...</div>`;
+        messagesContainer.appendChild(loadingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Call Netlify Secure Function Backend (Gemini API)
+        try {
+            const response = await fetch('/.netlify/functions/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+
+            const data = await response.json();
+            messagesContainer.removeChild(loadingDiv);
+
+            const botReply = data.reply || "I'm Aaron's portfolio assistant. Feel free to ask about his background, skills, or projects!";
+
+            const botMsgDiv = document.createElement('div');
+            botMsgDiv.className = 'flex items-start space-x-2 mt-2';
+            botMsgDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 max-w-[85%] text-eerie">${escapeHtml(botReply)}</div>`;
+            messagesContainer.appendChild(botMsgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        } catch (error) {
+            messagesContainer.removeChild(loadingDiv);
+            const botMsgDiv = document.createElement('div');
+            botMsgDiv.className = 'flex items-start space-x-2 mt-2';
+            botMsgDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 max-w-[85%] text-eerie">Aaron is a Computer Science student at Zetech University. How can I help you explore his portfolio?</div>`;
+            messagesContainer.appendChild(botMsgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    }
+
+    function escapeHtml(string) {
+        return string.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+</script>
+</script>
+</body>
+</html>
