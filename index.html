@@ -36,7 +36,7 @@
         }
     </script>
 
-    <!-- Custom CSS (Combined as requested) -->
+    <!-- Custom CSS -->
     <style>
         /* Base Styles & Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -54,8 +54,11 @@
         }
 
         /* Navigation active states */
+        .nav-link {
+            position: relative; /* Added this so the ::before dot positions correctly relative to the link */
+        }
         .nav-link.active {
-            color: #C0AB9A; /* Tuscany */
+            color: #C0AB9A;
             font-weight: 600;
         }
         .nav-link.active::before {
@@ -80,6 +83,37 @@
         .chat-transition {
             transition: all 0.3s ease-in-out;
         }
+
+        /* --- ADD YOUR IMAGE FIXES HERE --- */
+        
+        /* 1. Sidebar Profile Image (Fixes squishing and clarity) */
+        /* Make sure this class name matches your HTML (e.g., class="profile-img") */
+        .profile-img {
+            width: 150px; /* Adjust to match your exact circle size */
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover; /* Prevents the image from squishing */
+            object-position: center;
+        }
+
+        /* 2. Main Homepage Image (Prevents hair from cutting off) */
+        /* If using an <img> tag in HTML: */
+        .hero-img {
+            width: 100%;
+            height: 100vh; /* Or your preferred height */
+            object-fit: cover;
+            object-position: top center; /* Shifts focus upward to keep the hair */
+        }
+
+        /* OR, if the main image is a CSS background (choose one): */
+        .hero-section {
+            background-image: url('image_bbddfd.jpg');
+            background-size: cover;
+            background-position: top center; /* Shifts background upward to keep the hair */
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100vh;
+        }
     </style>
 
     <!-- External JavaScript -->
@@ -95,12 +129,13 @@
         </button>
     </header>
 
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar Navigation (Full sidebar restored) -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-eerie text-pearl transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-2xl overflow-y-auto">
         <div class="flex flex-col items-center pt-20 md:pt-12 px-8">
             
-            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-tuscany mb-6">
-                <img src="Aaron image.jpg" alt="Aaron Nyanzi Karanja - Professional Headshot" class="w-full h-full object-cover">
+            <!-- Image Location 1: Sidebar Profile -->
+            <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-tuscany mb-6 shadow-lg">
+                <img src="Aaron.jpg" alt="Aaron Nyanzi Karanja - Professional Headshot" class="w-full h-full object-cover object-top">
             </div>
             
             <h1 class="text-2xl font-bold tracking-wider mb-2 text-center uppercase">Aaron Nyanzi<br>Karanja</h1>
@@ -137,18 +172,32 @@
     <!-- Main Content Area -->
     <main class="md:ml-72 flex flex-col min-h-screen pt-16 md:pt-0">
         
-        <section id="home" class="min-h-screen px-6 py-20 md:px-16 lg:px-24 flex flex-col justify-center">
-            <div class="max-w-4xl">
+        <!-- Home Section (Split layout with 2nd Image Placement) -->
+        <section id="home" class="min-h-screen flex flex-col md:flex-row relative border-b border-tuscany/30">
+            <!-- Left Text Side -->
+            <div class="w-full md:w-1/2 flex flex-col justify-center px-8 md:px-16 py-20 z-10">
                 <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 uppercase">
                     Aaron Nyanzi <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-umber to-tuscany">Karanja</span>
                 </h2>
-                <h3 class="text-xl md:text-2xl font-semibold tracking-wide text-umber">
+                <h3 class="text-xl md:text-2xl font-semibold tracking-wide text-umber mb-8">
                     Computer Science Student | IT, Networking & Digital Design
                 </h3>
+                <div>
+                    <a href="#about" class="inline-block bg-tuscany hover:bg-umber text-eerie hover:text-pearl font-bold uppercase text-xs tracking-widest px-8 py-4 rounded transition-colors shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-umber">
+                        More About Me
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Right Image Side (Image Location 2) -->
+            <div class="w-full md:w-1/2 h-[50vh] md:h-auto relative bg-gray-200">
+                <img src="Aaron Image.png" alt="Aaron Nyanzi Karanja" class="absolute inset-0 w-full h-full object-cover object-top">
+                <!-- Overlay gradient to blend image with the pearl background -->
+                <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-transparent to-pearl opacity-50"></div>
             </div>
         </section>
 
-        <section id="about" class="py-20 px-6 md:px-16 lg:px-24 border-t border-tuscany/30 flex flex-col justify-center">
+        <section id="about" class="py-20 px-6 md:px-16 lg:px-24 flex flex-col justify-center">
             <div class="max-w-4xl">
                 <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
                     About Me
@@ -181,6 +230,7 @@
             </div>
         </section>
 
+        <!-- Skills Section ONLY (Portfolio Images Removed) -->
         <section id="skills" class="py-20 px-6 md:px-16 lg:px-24 border-t border-tuscany/30">
             <div class="max-w-4xl">
                 <h2 class="text-3xl font-extrabold tracking-widest uppercase mb-12 relative inline-block">
@@ -192,50 +242,50 @@
                     <div>
                         <h3 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Design & Video Production</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Canva</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">CapCut</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Canva</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">CapCut</span>
                         </div>
                     </div>
                     
                     <div>
                         <h3 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Web Development & Programming</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">HTML</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">CSS</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">JavaScript</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Python</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">HTML</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">CSS</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">JavaScript</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Python</span>
                         </div>
                     </div>
 
                     <div>
                         <h3 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Networking & IT Support</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Cisco Packet Tracer</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Cisco Packet Tracer</span>
                         </div>
                     </div>
 
                     <div>
                         <h3 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Analytics & Audience Growth</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Google Analytics</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Linktree</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Beacons</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Google Analytics</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Linktree</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Beacons</span>
                         </div>
                     </div>
 
                     <div>
                         <h3 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Social Media & Management</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">TikTok Analytics</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">YouTube Studio</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">TikTok Analytics</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">YouTube Studio</span>
                         </div>
                     </div>
 
                     <div>
                         <h3 class="font-semibold text-sm uppercase tracking-wider text-umber mb-3">Strategy & Productivity</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Google Workspace</span>
-                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded">Microsoft Office</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Google Workspace</span>
+                            <span class="px-3 py-1 bg-eerie text-pearl text-xs font-medium rounded shadow-sm">Microsoft Office</span>
                         </div>
                     </div>
                 </div>
