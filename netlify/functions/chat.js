@@ -1,97 +1,197 @@
-exports.handler = async function(event, context) {
-    const headers = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Content-Type": "application/json"
-    };
+// Set the current year dynamically in the footer
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('year').textContent = new Date().getFullYear();
+});
 
-    if (event.httpMethod === "OPTIONS") {
-        return { statusCode: 200, headers, body: "" };
+// Mobile Menu Variables and Logic
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebar-overlay');
+const navLinks = document.querySelectorAll('.nav-link');
+
+function toggleMenu() {
+    const isOpen = !sidebar.classList.contains('-translate-x-full');
+    mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+    
+    if (isOpen) {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    } else {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     }
+}
 
-    if (event.httpMethod !== "POST") {
-        return { statusCode: 405, headers, body: JSON.stringify({ error: "Method Not Allowed" }) };
-    }
+mobileMenuBtn.addEventListener('click', toggleMenu);
+overlay.addEventListener('click', toggleMenu);
 
-    try {
-        let body = {};
-        try {
-            body = JSON.parse(event.body || "{}");
-        } catch (e) {
-            body = { message: event.body };
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+            toggleMenu();
         }
+    });
+});
 
-        const message = body.message || "Hello";
-        const apiKey = process.env.GEMINI_API_KEY;
-
-        if (!apiKey) {
-            return { 
-                statusCode: 200, 
-                headers, 
-                body: JSON.stringify({ reply: "Configuration error: GEMINI_API_KEY is missing." }) 
-            };
+// Scroll Spy: Highlight active navigation link
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+            current = section.getAttribute('id');
         }
+    });
 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// Contact Form Handling (Web3Forms API)
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const btn = form.querySelector('button');
+    const status = document.getElementById('formStatus');
+    const originalText = btn.textContent;
+    
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    btn.classList.add('opacity-70');
+
+    fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to send message');
+        return response.json();
+    })
+    .then(data => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        btn.classList.remove('opacity-70');
         
-        const payload = {
-            contents: [{
-                parts: [{
-                    text: `You are the intelligent virtual portfolio assistant for Aaron Nyanzi Karanja. 
-                    Guidelines:
-                    - Answer conversationally and naturally, interpreting human phrasing intelligently (e.g. "where does he study?", "what school did he go to?").
-                    - Keep answers short, punchy, and direct. Do not dump unnecessary details like registration numbers unless specifically asked.
-                    - If the user says a greeting (like "hi", "hello"), reply with a brief, friendly greeting and ask how you can help them explore Aaron's portfolio.
-                    - If the user asks a non-portfolio question (unrelated to Aaron's professional background, education, skills, projects, or contact info), politely state that you are Aaron's portfolio assistant and can only discuss Aaron's professional details.
+        form.reset();
+        status.textContent = 'Message sent successfully!';
+        status.classList.remove('hidden', 'text-red-500');
+        status.classList.add('text-green-600');
+        
+        setTimeout(() => status.classList.add('hidden'), 4000);
+    })
+    .catch(error => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        btn.classList.remove('opacity-70');
+        
+        status.textContent = 'Oops! There was a problem sending your message.';
+        status.classList.remove('hidden', 'text-green-600');
+        status.classList.add('text-red-500');
+    });
+}
 
-                    Aaron's Profile Knowledge Base:
-                    - Name: Aaron Nyanzi Karanja
-                    - Title / Status: Computer Science Student & Digital Content Creator
-                    - Education: Computer Science student at Zetech University, expected graduation November 2027.
-                    - Experience: Digital Content Creator & Social Media Manager (grew Stickyfied to 50k+ followers).
-                    - Tech Stack: Full-Stack Web Development (HTML, CSS, JS, Python), Data Science workflows (KNN, Naive Bayes, Linear Regression), Cloud Infrastructure (GCP).
-                    - Projects: Tenantmode (Tenant Management System) and MediCore254 (Healthcare Portal).
-                    - Contacts: Email: Aaronkaranjanyanzi@gmail.com, WhatsApp: +254 716277805.
+// Chatbot Logic
+function toggleChat() {
+    const chatWindow = document.getElementById('chatWindow');
+    const chatIcon = document.getElementById('chatIcon');
+    const closeIcon = document.getElementById('closeIcon');
+    const toggleBtn = document.getElementById('botToggleBtn');
+    
+    const isHidden = chatWindow.classList.contains('hidden');
+    toggleBtn.setAttribute('aria-expanded', isHidden);
+    
+    chatWindow.classList.toggle('hidden');
+    chatIcon.classList.toggle('hidden');
+    closeIcon.classList.toggle('hidden');
+    
+    if (isHidden) {
+        document.getElementById('chatInput').focus();
+    }
+}
 
-                    Visitor Message: ${message}`
-                }]
-            }]
-        };
+function handleKeypress(event) {
+    if (event.key === 'Enter') sendMessage();
+}
 
-        const apiResponse = await fetch(url, {
+function sendQuickReply(text) {
+    document.getElementById('chatInput').value = text;
+    sendMessage();
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const messagesContainer = document.getElementById('chatMessages');
+
+    // Add user message
+    const userMsgDiv = document.createElement('div');
+    userMsgDiv.className = 'flex justify-end';
+    userMsgDiv.innerHTML = `<div class="bg-tuscany text-eerie font-medium p-3 rounded-lg shadow-sm max-w-[85%]">${escapeHtml(text)}</div>`;
+    messagesContainer.appendChild(userMsgDiv);
+
+    input.value = '';
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Check for hardcoded contact info keywords
+    const lowerText = text.toLowerCase();
+    if (lowerText.includes('contact') || lowerText.includes('email') || lowerText.includes('whatsapp')) {
+        const botMsgDiv = document.createElement('div');
+        botMsgDiv.className = 'flex items-start space-x-2 mt-2';
+        botMsgDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 max-w-[85%] text-eerie">You can reach Aaron directly here:<br><br>
+            <a href="mailto:Aaronkaranjanyanzi@gmail.com" class="text-tuscany font-bold underline hover:text-umber block mb-2">📧 Send an Email</a>
+            <a href="https://wa.me/254716277805" target="_blank" rel="noopener noreferrer" class="text-green-600 font-bold underline hover:text-green-700 block">💬 Message on WhatsApp</a></div>`;
+        messagesContainer.appendChild(botMsgDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return;
+    }
+
+    // Add loading indicator
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'flex items-start space-x-2 mt-2';
+    loadingDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 text-gray-400 italic text-xs">Thinking...</div>`;
+    messagesContainer.appendChild(loadingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Fetch reply from Netlify Function
+    try {
+        const response = await fetch('/.netlify/functions/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({ message: text })
         });
 
-        const data = await apiResponse.json();
+        const data = await response.json();
+        messagesContainer.removeChild(loadingDiv);
 
-        if (data.error) {
-            console.error("Gemini API Error:", data.error);
-            return { 
-                statusCode: 200, 
-                headers, 
-                body: JSON.stringify({ reply: `Gemini Error: ${data.error.message || 'Unknown API error'}` }) 
-            };
-        }
-
-        const rawReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm Aaron's portfolio assistant. Feel free to ask about his background, skills, or projects!";
-        
-        const reply = `✨ [Gemini AI]: ${rawReply}`;
-
-        return {
-            statusCode: 200,
-            headers,
-            body: JSON.stringify({ reply })
-        };
+        const botReply = data.reply || "I'm Aaron's portfolio assistant. Feel free to ask about his background!";
+        const botMsgDiv = document.createElement('div');
+        botMsgDiv.className = 'flex items-start space-x-2 mt-2';
+        botMsgDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 max-w-[85%] text-eerie">${escapeHtml(botReply)}</div>`;
+        messagesContainer.appendChild(botMsgDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
     } catch (error) {
-        console.error("Function Execution Error:", error);
-        return { 
-            statusCode: 200, 
-            headers, 
-            body: JSON.stringify({ reply: `System Error: ${error.message}` }) 
-        };
+        messagesContainer.removeChild(loadingDiv);
+        const botMsgDiv = document.createElement('div');
+        botMsgDiv.className = 'flex items-start space-x-2 mt-2';
+        botMsgDiv.innerHTML = `<div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 max-w-[85%] text-eerie">Aaron is a Computer Science student at Zetech University. How can I help you explore his portfolio?</div>`;
+        messagesContainer.appendChild(botMsgDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-};
+}
+
+// Utility: Escape HTML to prevent XSS
+function escapeHtml(string) {
+    return string.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
